@@ -1,0 +1,32 @@
+This is an example of an actual OpenCL 3D lattice simulation done on the GPU, making use of the 
+scaffolding set in the OpenCLThreeDimArray project (https://github.com/fhstoica/OpenCLThreeDimArray).
+
+It is a simpler simulation than the Abelian Higgs one (https://github.com/fhstoica/AbelianHiggs), 
+there are no vector fiels, only a complex scalar field.
+
+It is a good idea to run this OpenCL version even on a system without a perfomant GPU, 
+by simply running it on the CPU. This way there is no need to write multi-threaded code, 
+the parallel processing is automatically taken care of. 
+
+To build the program you can use, for example, CUDA 6.0:
+
+g++ ThreeDimLattice.cpp -I/usr/local/cuda-6.0/include/  -L/usr/local/cuda-6.0/lib64/ -L/usr/lib/ -lOpenCL -lstdc++ -o ThreeDimLattice
+
+Then the steps are the same as in the Abelian Higgs case, the README file for that project describes the necessary steps.
+Generate the initial data with:
+
+./GenerateInitialData.py <seed>
+
+where <seed> is some number (e.g. 98579). The script will generate the file "initial_data.dat", 
+which is read by the ThreeDimLattice executable. 
+
+The lattice size is set to 64^3, if a different dimension is needed, both the GenerateInitialData.py and the 
+ThreeDimLattice.cpp files will have to be updated.
+
+The result of the run is the file "output.txt" which can be visualized with the OpenGL tools 
+from the Abelian Higgs project.
+
+On an Nvidia GeForce 9600 GT it takes about 20 seconds to run 2000 simulation steps. The multithreaded simulation running
+on an Athlon II X4 at 3.0GHz takes about 4 minutes.
+
+Happy hacking!
